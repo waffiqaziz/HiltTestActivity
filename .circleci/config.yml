@@ -10,26 +10,17 @@ jobs:
       - image: cimg/android:2023.08
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies-
+      - android/restore-gradle-cache
       - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
       - run:
           name: Install dependencies
           command: ./gradlew androidDependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-            - ~/.android
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
       - run:
           name: Build project
           command: ./gradlew clean assemble
+      - android/save-gradle-cache
 
   unit tests:
     working_directory: ~/project
@@ -37,11 +28,15 @@ jobs:
       - image: cimg/android:2023.08
     steps:
       - checkout
+      - android/restore-gradle-cache
+      - run:
+          name: Chmod permissions
+          command: chmod +x ./gradlew
       - run:
           name: Run Local UnitTests
           command: |
             ./gradlew clean test
-
+      - android/save-gradle-cache
       - store_test_results:
           path: app\build\test-results
 
@@ -50,7 +45,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: 2023.07.1
+      tag: 2024.01.1
     steps:
       - checkout
       - run:
