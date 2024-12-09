@@ -52,6 +52,9 @@ jobs:
           key: android-orb-v1-
       - android/change-java-version:
           java-version: 17
+      - run:
+          name: Chmod permissions
+          command: chmod +x ./gradlew
       - android/create-avd:
           avd-name: myAvd
           install: true
@@ -60,9 +63,6 @@ jobs:
           avd-name: myAvd
           no-window: true
           restore-gradle-cache-prefix: v1a
-      - run:
-          name: Chmod permissions
-          command: chmod +x ./gradlew
       - android/run-tests
       - android/save-gradle-cache:
           cache-prefix: v1a
