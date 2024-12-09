@@ -51,7 +51,7 @@ jobs:
       - restore_cache:
           key: android-orb-v1-
       - android/change-java-version:
-          java-version: 11
+          java-version: 17
       - android/create-avd:
           avd-name: myAvd
           install: true
