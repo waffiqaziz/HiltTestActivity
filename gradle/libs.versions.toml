@@ -19,7 +19,7 @@ activityCompose = "1.9.3"
 compileSdk = "34"
 composeVersion = "2.0.21"
 ui = "1.7.5"
-uiToolingPreview = "1.7.5"
+uiToolingPreview = "1.7.6"
 kotlinCompilerExtensionVersion = "1.5.15"
 # Testing
 espressoCore = "3.6.1"
