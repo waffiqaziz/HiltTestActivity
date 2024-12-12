@@ -1,4 +1,4 @@
-# HiltTestContainerActivity
+# HiltTestActivity
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/waffiqaziz/HiltTestActivity/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/waffiqaziz/HiltTestActivity/tree/main)
 ![GitHub License](https://img.shields.io/github/license/waffiqaziz/HiltTestActivity)
