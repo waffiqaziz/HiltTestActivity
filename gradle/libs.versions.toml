@@ -19,8 +19,8 @@ activityCompose = "1.9.3"
 compileSdk = "34"
 composeVersion = "2.0.21"
 ui = "1.7.5"
-uiToolingPreview = "1.7.5"
 kotlinCompilerExtensionVersion = "1.5.15"
+
 # Testing
 espressoCore = "3.6.1"
 junit = "4.13.2"
@@ -46,7 +46,7 @@ lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", v
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "ui" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "ui" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "ui" }
 ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
 
 [plugins]
