@@ -7,7 +7,7 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: cimg/android:2024.11
+      - image: cimg/android:2025.01
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -25,7 +25,7 @@ jobs:
   unit tests:
     working_directory: ~/project
     docker:
-      - image: cimg/android:2024.11
+      - image: cimg/android:2025.01
     steps:
       - checkout
       - android/restore-gradle-cache
