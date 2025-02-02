@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.5.0
+   android: circleci/android@3.0.2
 
 jobs:
   build:
@@ -10,7 +10,7 @@ jobs:
       - image: cimg/android:2025.01
     steps:
       - checkout
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Build project
           command: ./gradlew clean assemble
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   unit tests:
     working_directory: ~/project
@@ -28,7 +28,7 @@ jobs:
       - image: cimg/android:2025.01
     steps:
       - checkout
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
@@ -36,36 +36,36 @@ jobs:
           name: Run Local UnitTests
           command: |
             ./gradlew clean test
-      - android/save-gradle-cache
+      - android/save_gradle_cache
       - store_test_results:
           path: app\build\test-results
 
 
   instrumented_test:
     executor:
-      name: android/android-machine
-      resource-class: large
+      name: android/android_machine
+      resource_class: large
       tag: 2024.01.1
     steps:
       - checkout
       - restore_cache:
           key: android-orb-v1-
-      - android/change-java-version:
-          java-version: 17
+      - android/change_java_version:
+          java_version: 17
       - run:
           name: Chmod permissions
           command: chmod +x ./gradlew
-      - android/create-avd:
-          avd-name: myAvd
+      - android/create_avd:
+          avd_name: myAvd
           install: true
-          system-image: system-images;android-29;default;x86
-      - android/start-emulator:
-          avd-name: myAvd
-          no-window: true
-          restore-gradle-cache-prefix: v1a
-      - android/run-tests
-      - android/save-gradle-cache:
-          cache-prefix: v1a
+          system_image: system-images;android-29;default;x86_64
+      - android/start_emulator:
+          avd_name: myAvd
+          no_window: true
+          restore_gradle_cache_prefix: v1a
+      - android/run_tests
+      - android/save_gradle_cache:
+          cache_prefix: v1a
 
 workflows:
   build_and_testing:
