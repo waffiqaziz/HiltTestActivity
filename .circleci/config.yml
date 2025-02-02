@@ -38,9 +38,10 @@ jobs:
             ./gradlew testDebugUnitTest
       - android/save_gradle_cache
       - store_test_results:
-          path: app/build/reports/test/testDebugUnitTest
+          path: app/build/test-results/testDebugUnitTest
       - store_artifacts:
-          path: app/build/reports/test/testDebugUnitTest
+          path: app/build/reports/tests/testDebugUnitTest
+          destination: unit_test_reports
 
 
   instrumented_test:
@@ -67,9 +68,9 @@ jobs:
           restore_gradle_cache_prefix: v1a
       - android/run_tests
       - store_test_results:
-          path: app/build/outputs/androidTest-results
+          path: app/build/reports/androidTests/connected/debug
       - store_artifacts:
-          path: app/build/outputs/androidTest-results
+          path: app/build/reports/androidTests/connected/debug
       - android/save_gradle_cache:
           cache_prefix: v1a
 
