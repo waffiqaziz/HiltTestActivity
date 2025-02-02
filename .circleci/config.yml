@@ -38,7 +38,7 @@ jobs:
             ./gradlew clean test
       - android/save_gradle_cache
       - store_test_results:
-          path: app\build\test-results
+          path: app/build/outputs/test-results
 
 
   instrumented_test:
@@ -64,6 +64,8 @@ jobs:
           no_window: true
           restore_gradle_cache_prefix: v1a
       - android/run_tests
+      - store_test_results:
+          path: app/build/outputs/androidTest-results
       - android/save_gradle_cache:
           cache_prefix: v1a
 
