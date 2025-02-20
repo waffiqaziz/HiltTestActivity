@@ -1,9 +1,13 @@
 # HiltTestActivity
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/waffiqaziz/HiltTestActivity/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/waffiqaziz/HiltTestActivity/tree/main)
+[![codecov](https://codecov.io/gh/waffiqaziz/HiltTestActivity/graph/badge.svg?token=OKBP27L0UB)](https://codecov.io/gh/waffiqaziz/HiltTestActivity)
 ![GitHub License](https://img.shields.io/github/license/waffiqaziz/HiltTestActivity)
 
-This repository contains a simple Android project demonstrating the use of **Jetpack Compose** for building UI, **Hilt** for dependency injection, and **CircleCI** for continuous integration and testing. The project focuses on **instrumented testing (UI testing)** using **Jetpack Compose Test APIs**.
+This repository contains a simple Android project demonstrating the use of **Jetpack Compose** for
+building UI, **Hilt** for dependency injection, and **CircleCI** for continuous integration and
+testing. The project focuses on **instrumented testing (UI testing)** using **Jetpack Compose Test
+APIs**.
 
 ## 🛠️ Tech Stack
 
@@ -53,7 +57,8 @@ This repository contains a simple Android project demonstrating the use of **Jet
 
 ## 🔗 CI/CD with CircleCI
 
-This project includes a `.circleci/config.yml` file for automating builds and tests. To use CircleCI:
+This project includes a `.circleci/config.yml` file for automating builds and tests. To use
+CircleCI:
 
 1. Push the repository to GitHub or another supported VCS.
 2. Set up the project on [CircleCI](https://circleci.com/).
