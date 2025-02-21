@@ -8,14 +8,14 @@ coverage:
   precision: 2      # Number of decimal places, between 0 and 5
 
 ignore:
-  - "**/R.class"
-  - "**/R\$*.class"
-  - "**/BuildConfig.*"
-  - "**/Manifest*.*"
-  - "**/*Test*.*"
-  - "**/hilt_aggregated_deps/**"
-  - "**/*_Provide*"
-  - "**/*_Factory*"
-  - "**/*Preview*"
-  - "**/*_*"
-  - "**/di/**"
+  - '**/R.class'
+  - '**/R$*.class'
+  - '**/BuildConfig.*'
+  - '**/Manifest*.*'
+  - '**/*Test*.*'
+  - '**/hilt_aggregated_deps/**'
+  - '**/*_Provide*.*'
+  - '**/*_Factory*.*'
+  - '**/*Preview*.*'
+  - '**/*_*.*'
+  - 'di/**'
