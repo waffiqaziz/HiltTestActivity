@@ -85,14 +85,14 @@ jobs:
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: code-coverage-report-markdown
+          name: code-coverage-report-html
           path: ${{ github.workspace }}/**/build/reports/jacoco/JacocoDebugCodeCoverage/html
           retention-days: 1
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
-          files: ${{ github.workspace }}/**/build/reports/jacoco/JacocoDebugCodeCoverage/JacocoDebugCodeCoverage.xml
+          files: ${{ github.workspace }}/**/build/reports/jacoco/**/*.xml
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload test results to Codecov
