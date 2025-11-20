@@ -10,7 +10,7 @@ targetSdk = "36"
 compileSdk = "36"
 minSdk = "23"
 
-lifecycleKtx = "2.9.4"
+lifecycleKtx = "2.10.0"
 material3 = "1.4.0"
 
 # Compose
