@@ -1,4 +1,5 @@
 import java.util.Locale
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
   alias(libs.plugins.android.application)
@@ -41,12 +42,15 @@ android {
     targetCompatibility = JavaVersion.VERSION_17
   }
 
-  kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_17.toString()
+  kotlin {
+    compilerOptions {
+      jvmTarget = JvmTarget.JVM_17
+    }
   }
   buildFeatures {
     compose = true
   }
+  @Suppress("UnstableApiUsage")
   composeOptions {
     kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get().toString()
   }
