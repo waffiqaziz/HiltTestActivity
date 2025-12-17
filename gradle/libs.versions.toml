@@ -1,7 +1,7 @@
 [versions]
 agp = "8.13.2"
 coreKtx = "1.17.0"
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 ksp = "2.3.3"
 hilt = "2.57.2"
 
@@ -16,7 +16,7 @@ material3 = "1.4.0"
 # Compose
 hiltNavigationCompose = "1.3.0"
 activityCompose = "1.12.1"
-composeVersion = "2.2.21"
+composeVersion = "2.3.0"
 ui = "1.10.0"
 kotlinCompilerExtensionVersion = "1.5.15"
 
