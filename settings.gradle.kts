@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     mavenCentral()
   }
 }
-rootProject.name = "InstrumentedTestHilt"
+rootProject.name = "HiltTestActivity"
 include(":app")
