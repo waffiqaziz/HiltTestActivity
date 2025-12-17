@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.waffiq.testactivity.composables.ArticlesScreen
 import com.waffiq.testactivity.repository.ArticlesRepository
 import com.waffiq.testactivity.ui.theme.InstrumentationTestsHiltTheme

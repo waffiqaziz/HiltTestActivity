@@ -1,11 +1,16 @@
 package com.waffiq.testactivity.composables
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,13 +30,15 @@ fun ArticlesScreen(viewModel: ArticlesViewModel) {
 
 @Composable
 fun ArticleList(articles: List<Article>) {
-  LazyColumn(
-    verticalArrangement = Arrangement.spacedBy(8.dp),
-    modifier = Modifier
-      .padding(16.dp)
-      .testTag("testTagArticlesList")
+  Scaffold(
+    modifier = Modifier.fillMaxSize().statusBarsPadding()
   ) {
-    items(articles) { item -> ArticleCard(item.title, item.subtitle, item.category) }
+    LazyColumn(
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+      modifier = Modifier.padding(16.dp).testTag("testTagArticlesList")
+    ) {
+      items(articles) { item -> ArticleCard(item.title, item.subtitle, item.category) }
+    }
   }
 }
 
