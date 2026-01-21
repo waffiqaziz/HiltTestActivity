@@ -57,7 +57,7 @@ jobs:
           disable-animations: true
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Run test Coverage on android
+      - name: Run test and code coverage
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -68,7 +68,7 @@ jobs:
           disable-animations: true
           script: |
             adb wait-for-device
-            ./gradlew jacocoDebugCodeCoverage 
+            ./gradlew jacocoDebugCodeCoverage
 
       - name: Add coverage to PR
         id: jacoco
@@ -79,8 +79,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           update-comment: true
           min-coverage-overall: 70
-          #min-coverage-overall: 40
-          #min-coverage-changed-files: 60
 
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v6
