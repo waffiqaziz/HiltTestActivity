@@ -15,9 +15,6 @@ jobs:
           name: Chmod permissions
           command: chmod +x ./gradlew
       - run:
-          name: Install dependencies
-          command: ./gradlew androidDependencies
-      - run:
           name: Build project
           command: ./gradlew clean assemble
       - android/save_gradle_cache
