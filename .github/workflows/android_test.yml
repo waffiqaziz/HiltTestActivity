@@ -68,14 +68,14 @@ jobs:
           disable-animations: true
           script: |
             adb wait-for-device
-            ./gradlew JacocoDebugCodeCoverage 
+            ./gradlew jacocoDebugCodeCoverage 
 
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.7.2
         with:
           paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/JacocoDebugCodeCoverage/JacocoDebugCodeCoverage.xml,
+            ${{ github.workspace }}/**/build/reports/jacoco/jacocoDebugCodeCoverage/jacocoDebugCodeCoverage.xml,
           token: ${{ secrets.GITHUB_TOKEN }}
           update-comment: true
           min-coverage-overall: 70
@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: code-coverage-report-html
-          path: ${{ github.workspace }}/**/build/reports/jacoco/JacocoDebugCodeCoverage/html
+          path: ${{ github.workspace }}/**/build/reports/jacoco/jacocoDebugCodeCoverage/html
           retention-days: 1
 
       - name: Upload coverage reports to Codecov
