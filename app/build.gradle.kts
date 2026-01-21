@@ -1,9 +1,9 @@
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import java.util.Locale
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
   alias(libs.plugins.android.application)
-  alias(libs.plugins.kotlin.android)
   alias(libs.plugins.compose)
   alias(libs.plugins.hilt)
   alias(libs.plugins.ksp)
@@ -114,38 +114,51 @@ tasks.withType(Test::class) {
   }
 }
 
-android {
-  applicationVariants.all(closureOf<com.android.build.gradle.internal.api.BaseVariantImpl> {
-    val variant = this@closureOf.name.replaceFirstChar {
-      if (it.isLowerCase()) it.titlecase(
-        Locale.getDefault()
-      ) else it.toString()
+extensions.configure<ApplicationAndroidComponentsExtension>("androidComponents") {
+
+  onVariants { variant ->
+
+    val variantName = variant.name
+    val variantNameCap = variantName.replaceFirstChar {
+      if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
 
-    val unitTests = "test${variant}UnitTest"
-    val androidTests = "connected${variant}AndroidTest"
+    val unitTestTaskName = "test${variantNameCap}UnitTest"
+    val androidTestTaskName = "connected${variantNameCap}AndroidTest"
 
-    tasks.register<JacocoReport>("Jacoco${variant}CodeCoverage") {
-      dependsOn(listOf(unitTests, androidTests))
-      //dependsOn(listOf(unitTests))
+    tasks.register<JacocoReport>("jacoco${variantNameCap}CodeCoverage") {
+
       group = "Reporting"
-      description = "Execute ui and unit tests, generate and combine Jacoco coverage report"
+      description = "Runs unit & android tests and generates Jacoco coverage"
+
+      dependsOn(unitTestTaskName, androidTestTaskName)
+
       reports {
         xml.required.set(true)
         html.required.set(true)
       }
-      sourceDirectories.setFrom(layout.projectDirectory.dir("src/main"))
-      classDirectories.setFrom(files(
-        fileTree(layout.buildDirectory.dir("intermediates/javac/")) {
-          exclude(exclusions)
-        },
-        fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/")) {
-          exclude(exclusions)
+
+      sourceDirectories.setFrom(
+        layout.projectDirectory.dir("src/main/java"),
+        layout.projectDirectory.dir("src/main/kotlin")
+      )
+
+      classDirectories.setFrom(
+        files(
+          fileTree(layout.buildDirectory.dir("intermediates/javac/$variantName")) {
+            exclude(exclusions)
+          },
+          fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/$variantName")) {
+            exclude(exclusions)
+          }
+        )
+      )
+
+      executionData.setFrom(
+        fileTree(layout.buildDirectory) {
+          include("**/*.exec", "**/*.ec")
         }
-      ))
-      executionData.setFrom(files(
-        fileTree(layout.buildDirectory) { include(listOf("**/*.exec", "**/*.ec")) }
-      ))
+      )
     }
-  })
+  }
 }
