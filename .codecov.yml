@@ -12,6 +12,7 @@ ignore:
   - '**/R$*.class'
   - '**/BuildConfig.*'
   - '**/Manifest*.*'
+  - "**/Composable*.*"
   - '**/*Test*.*'
   - '**/hilt_aggregated_deps/**'
   - '**/*_Provide*.*'

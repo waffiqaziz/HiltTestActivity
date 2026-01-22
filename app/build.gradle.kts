@@ -1,9 +1,10 @@
-import java.util.Locale
+import com.android.build.api.artifact.ScopedArtifact
+import com.android.build.api.variant.ScopedArtifacts
+import com.android.build.api.variant.SourceDirectories
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
   alias(libs.plugins.android.application)
-  alias(libs.plugins.kotlin.android)
   alias(libs.plugins.compose)
   alias(libs.plugins.hilt)
   alias(libs.plugins.ksp)
@@ -41,23 +42,22 @@ android {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
-
-  kotlin {
-    compilerOptions {
-      jvmTarget = JvmTarget.JVM_17
-    }
-  }
   buildFeatures {
     compose = true
   }
-  @Suppress("UnstableApiUsage")
   composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get().toString()
+    kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
   }
   packaging {
     resources {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+  }
+}
+
+kotlin {
+  compilerOptions {
+    jvmTarget = JvmTarget.JVM_17
   }
 }
 
@@ -98,6 +98,7 @@ val exclusions = listOf(
   "**/R\$*.class",
   "**/BuildConfig.*",
   "**/Manifest*.*",
+  "**/Composable*.*",
   "**/*Test*.*",
   "**/hilt_aggregated_deps/**",
   "**/*_Provide*",
@@ -114,38 +115,71 @@ tasks.withType(Test::class) {
   }
 }
 
-android {
-  applicationVariants.all(closureOf<com.android.build.gradle.internal.api.BaseVariantImpl> {
-    val variant = this@closureOf.name.replaceFirstChar {
-      if (it.isLowerCase()) it.titlecase(
-        Locale.getDefault()
-      ) else it.toString()
-    }
+androidComponents {
+  onVariants { variant ->
+    val variantName = variant.name.replaceFirstChar { it.uppercase() }
+    val unitTests = "test${variantName}UnitTest"
+    val androidTests = "connected${variantName}AndroidTest"
 
-    val unitTests = "test${variant}UnitTest"
-    val androidTests = "connected${variant}AndroidTest"
-
-    tasks.register<JacocoReport>("Jacoco${variant}CodeCoverage") {
+    val myObjFactory = project.objects
+    val buildDir = layout.buildDirectory.get().asFile
+    val allJars: ListProperty<RegularFile> = myObjFactory.listProperty(RegularFile::class.java)
+    val allDirectories: ListProperty<Directory> = myObjFactory.listProperty(Directory::class.java)
+    val reportTask = tasks.register<JacocoReport>("Jacoco${variantName}CodeCoverage") {
       dependsOn(listOf(unitTests, androidTests))
-      //dependsOn(listOf(unitTests))
-      group = "Reporting"
-      description = "Execute ui and unit tests, generate and combine Jacoco coverage report"
-      reports {
-        xml.required.set(true)
-        html.required.set(true)
-      }
-      sourceDirectories.setFrom(layout.projectDirectory.dir("src/main"))
-      classDirectories.setFrom(files(
-        fileTree(layout.buildDirectory.dir("intermediates/javac/")) {
-          exclude(exclusions)
+
+      classDirectories.setFrom(
+        allJars.map { jars ->
+          jars.filter { jar ->
+            val jarName = jar.asFile.name.lowercase()
+            jarName.contains("classes.jar") &&
+              !jarName.contains("androidx") &&
+              !jarName.contains("android.jar") &&
+              !jarName.contains("kotlin-stdlib") &&
+              !jarName.contains("kotlinx-") &&
+              !jarName.contains("hilt-") &&
+              !jarName.contains("dagger-")
+          }.map { jar ->
+            zipTree(jar).matching {
+              exclude(exclusions)
+            }
+          }
         },
-        fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/")) {
-          exclude(exclusions)
-        }
-      ))
-      executionData.setFrom(files(
-        fileTree(layout.buildDirectory) { include(listOf("**/*.exec", "**/*.ec")) }
-      ))
+        allDirectories.map { dirs ->
+          dirs.map { dir ->
+            myObjFactory.fileTree().setDir(dir).exclude(exclusions)
+          }
+        },
+      )
+
+      reports {
+        xml.required = true
+        html.required = true
+      }
+
+      fun SourceDirectories.Flat?.toFilePaths(): Provider<List<String>> =
+        this?.all?.map { directories -> directories.map { it.asFile.path } }
+          ?: provider { emptyList() }
+      sourceDirectories.setFrom(
+        files(
+          variant.sources.java.toFilePaths(), variant.sources.kotlin.toFilePaths()
+        ),
+      )
+
+      executionData.setFrom(
+        project.fileTree("$buildDir/outputs/unit_test_code_coverage/${variant.name}UnitTest")
+          .matching { include("**/*.exec") },
+
+        project.fileTree("$buildDir/outputs/code_coverage/${variant.name}AndroidTest")
+          .matching { include("**/*.ec") },
+      )
     }
-  })
+
+
+    variant.artifacts.forScope(ScopedArtifacts.Scope.PROJECT).use(reportTask).toGet(
+      ScopedArtifact.CLASSES,
+      { _ -> allJars },
+      { _ -> allDirectories },
+    )
+  }
 }
