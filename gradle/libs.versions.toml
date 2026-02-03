@@ -3,7 +3,7 @@ agp = "9.0.0"
 coreKtx = "1.17.0"
 kotlin = "2.3.0"
 ksp = "2.3.5"
-hilt = "2.59"
+hilt = "2.59.1"
 
 # default config
 targetSdk = "36"
