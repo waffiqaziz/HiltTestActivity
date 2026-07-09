@@ -2,7 +2,7 @@
 agp = "9.2.1"
 coreKtx = "1.18.0"
 kotlin = "2.4.0"
-ksp = "2.3.9"
+ksp = "2.3.10"
 hilt = "2.60.1"
 
 # default config
