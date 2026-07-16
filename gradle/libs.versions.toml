@@ -11,7 +11,7 @@ compileSdk = "36"
 minSdk = "23"
 kotlinCompilerExtensionVersion = "1.5.15"
 
-lifecycleKtx = "2.10.0"
+lifecycleKtx = "2.11.0"
 material3 = "1.4.0"
 
 # Compose
