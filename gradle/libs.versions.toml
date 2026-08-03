@@ -6,8 +6,8 @@ ksp = "2.3.11"
 hilt = "2.60.1"
 
 # default config
-targetSdk = "36"
-compileSdk = "36"
+targetSdk = "37"
+compileSdk = "37"
 minSdk = "23"
 kotlinCompilerExtensionVersion = "1.5.15"
 
