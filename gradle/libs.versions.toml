@@ -8,11 +8,11 @@ hilt = "2.60.1"
 # default config
 targetSdk = "37"
 compileSdk = "37"
-minSdk = "23"
+minSdk = "24"
 kotlinCompilerExtensionVersion = "1.5.15"
 
 lifecycleKtx = "2.11.1"
-material3 = "1.4.0"
+material3 = "1.5.0"
 
 # Compose
 hiltNavigationCompose = "1.4.0"
