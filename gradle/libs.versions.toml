@@ -17,7 +17,7 @@ material3 = "1.5.0"
 # Compose
 hiltNavigationCompose = "1.4.0"
 activityCompose = "1.13.0"
-ui = "1.12.1"
+ui = "1.13.0"
 
 # Testing
 espressoCore = "3.7.0"
